@@ -255,4 +255,27 @@ return [
         ],
     ],
 
+    // Site languages: code => [native name, text direction]. Translations live in lang/{code}.json
+    'locales' => [
+        'en' => ['English', 'ltr'],
+        'es' => ['Español', 'ltr'],
+        'fr' => ['Français', 'ltr'],
+        'de' => ['Deutsch', 'ltr'],
+        'pt' => ['Português', 'ltr'],
+        'ar' => ['العربية', 'rtl'],
+    ],
+
+    // Open roles: title, area, location, type (used by the careers page and the Careers menu counts)
+    'roles' => [
+        ['Flight Controls Engineer', 'Engineering', 'Fort Worth, Texas', 'Full-time'],
+        ['Avionics Software Engineer', 'Engineering', 'Fort Worth, Texas', 'Full-time'],
+        ['Graduate Engineer Program', 'Engineering', 'Multiple locations', 'Early careers'],
+        ['Composite Technician', 'Manufacturing', 'Fort Worth, Texas', 'Full-time'],
+        ['Production Planner', 'Manufacturing', 'Dallas, Texas', 'Full-time'],
+        ['Flight Test Pilot', 'Flight operations', 'Mojave, California', 'Full-time'],
+        ['Flight Test Engineer', 'Flight operations', 'Mojave, California', 'Full-time'],
+        ['Financial Analyst', 'Business & finance', 'Fort Worth, Texas', 'Full-time'],
+        ['Supply Chain Manager', 'Business & finance', 'Dallas, Texas', 'Full-time'],
+    ],
+
 ];

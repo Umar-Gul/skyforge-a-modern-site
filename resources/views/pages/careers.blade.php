@@ -7,17 +7,7 @@
     $areas = ['Engineering', 'Manufacturing', 'Flight operations', 'Business & finance'];
     $active = $area ? \Illuminate\Support\Str::slug($area) : 'all';
 
-    $roles = [
-        ['Flight Controls Engineer', 'Engineering', 'Fort Worth, Texas', 'Full-time'],
-        ['Avionics Software Engineer', 'Engineering', 'Fort Worth, Texas', 'Full-time'],
-        ['Graduate Engineer Program', 'Engineering', 'Multiple locations', 'Early careers'],
-        ['Composite Technician', 'Manufacturing', 'Fort Worth, Texas', 'Full-time'],
-        ['Production Planner', 'Manufacturing', 'Dallas, Texas', 'Full-time'],
-        ['Flight Test Pilot', 'Flight operations', 'Mojave, California', 'Full-time'],
-        ['Flight Test Engineer', 'Flight operations', 'Mojave, California', 'Full-time'],
-        ['Financial Analyst', 'Business & finance', 'Fort Worth, Texas', 'Full-time'],
-        ['Supply Chain Manager', 'Business & finance', 'Dallas, Texas', 'Full-time'],
-    ];
+    $roles = config('skyforge.roles');
 
     $life = [
         ['Work that matters', 'Your work ends up in aircraft that rescue people, connect communities and move help where it is needed.'],

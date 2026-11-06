@@ -302,6 +302,36 @@ document.querySelectorAll('[data-tabs]').forEach(group => {
     });
 });
 
+/* ---------- Aircraft menu: hovering a model updates the featured card ---------- */
+document.querySelectorAll('[data-preview-group]').forEach(group => {
+    const card = group.querySelector('[data-preview-card]');
+    if (!card) return;
+    const img = card.querySelector('[data-preview-img]');
+    const eyebrow = card.querySelector('[data-preview-eyebrow]');
+    const title = card.querySelector('[data-preview-title]');
+    const desc = card.querySelector('[data-preview-desc]');
+
+    const preview = item => {
+        const d = item.dataset;
+        if (card.dataset.current === d.title) return;
+        card.dataset.current = d.title;
+        card.href = d.href;
+        img.src = d.image;
+        img.alt = d.title;
+        eyebrow.textContent = d.eyebrow;
+        title.textContent = d.title;
+        desc.textContent = d.desc || '';
+        desc.classList.toggle('hidden', !d.desc);
+        card.classList.remove('is-swap');
+        void card.offsetWidth; // restart the animation
+        card.classList.add('is-swap');
+    };
+    group.querySelectorAll('[data-preview]').forEach(item => {
+        item.addEventListener('mouseenter', () => preview(item));
+        item.addEventListener('focusin', () => preview(item));
+    });
+});
+
 /* ---------- Search overlay ---------- */
 const searchOverlay = document.getElementById('search-overlay');
 const searchInput = searchOverlay?.querySelector('input');

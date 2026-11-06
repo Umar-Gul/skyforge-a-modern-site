@@ -215,3 +215,45 @@ select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmln
     .chip:hover { border-color: #fff; }
     .chip.is-active { background: var(--color-signal); border-color: var(--color-signal); color: #fff; }
 }
+
+
+/* ---------- Phase 7: richer menus, spec chips, RTL ---------- */
+@layer components {
+    .menu-desc {
+        display: block; margin-top: .1rem; font-size: 13px; line-height: 1.35;
+        color: var(--color-steel, #8a97ad);
+        transition: color .25s ease;
+    }
+    .menu-link-rich:hover .menu-desc { color: rgba(255, 255, 255, .8); }
+    .spec-chip {
+        display: inline-block; border: 1px solid rgba(255, 255, 255, .16); border-radius: 9999px;
+        padding: .2rem .65rem; font-size: 11.5px; letter-spacing: .02em; color: rgba(255, 255, 255, .65);
+        transition: border-color .25s ease, color .25s ease;
+    }
+    .spec-chip b { font-weight: 600; color: #fff; }
+    .menu-link-rich:hover .spec-chip { border-color: var(--color-signal); }
+}
+
+/* Featured card cross-fade when the preview changes */
+@keyframes previewIn { from { opacity: .35; transform: scale(1.04); } to { opacity: 1; transform: none; } }
+[data-preview-card].is-swap [data-preview-img] { animation: previewIn .45s ease both; }
+[data-preview-card].is-swap [data-preview-title],
+[data-preview-card].is-swap [data-preview-eyebrow],
+[data-preview-card].is-swap [data-preview-desc] { animation: previewIn .35s ease both; }
+
+/* Right-to-left (Arabic) */
+[dir="rtl"] body { font-family: 'Noto Sans Arabic', 'Inter', system-ui, sans-serif; }
+[dir="rtl"] .font-display, [dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3 { font-family: 'Noto Sans Arabic', var(--font-display), sans-serif; letter-spacing: 0; text-transform: none; }
+[dir="rtl"] .menu-link:hover { transform: translateX(-6px); }
+[dir="rtl"] .menu-tab { padding: .55rem 1rem .55rem 0; text-align: right; }
+[dir="rtl"] .menu-tab::before { left: auto; right: 0; }
+[dir="rtl"] svg.flip-rtl { transform: scaleX(-1); }
+
+/* Auth pages */
+.auth-input {
+    width: 100%; border-radius: .75rem; border: 1px solid rgba(255, 255, 255, .2); background: transparent;
+    padding: .875rem 1.25rem; font-size: 15px; color: #fff; outline: none; transition: border-color .25s ease;
+}
+.auth-input::placeholder { color: rgba(255, 255, 255, .35); }
+.auth-input:focus { border-color: var(--color-signal); }
+.auth-input.is-invalid { border-color: #f87171; }

@@ -1,0 +1,217 @@
+@import 'tailwindcss';
+
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-sans: 'Inter', sans-serif;
+    --color-navy: #0a1220;
+    --color-navy-2: #101c33;
+    --color-signal: #ff5a1f;
+    --color-steel: #8a97a8;
+}
+
+html { scroll-behavior: smooth; scroll-padding-top: 5.5rem; }
+body { background: var(--color-navy); color: #fff; font-family: var(--font-sans); }
+
+/* Header */
+#site-header {
+    transition: background-color .35s ease, backdrop-filter .35s ease, box-shadow .35s ease;
+}
+#site-header.is-scrolled,
+#site-header.menu-open {
+    background: rgba(10, 18, 32, .94);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .06);
+}
+
+/* Mega menu */
+.mega-panel {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity .25s ease, transform .25s ease, visibility .25s;
+}
+.mega-panel.is-open { opacity: 1; visibility: visible; transform: none; }
+
+.nav-link { position: relative; }
+.nav-link::after {
+    content: '';
+    position: absolute; left: 0; bottom: -6px;
+    width: 100%; height: 2px;
+    background: var(--color-signal);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .3s ease;
+}
+.nav-link:hover::after,
+.nav-link[aria-expanded="true"]::after { transform: scaleX(1); }
+
+/* Mobile menu */
+#mobile-menu { transform: translateX(100%); transition: transform .4s cubic-bezier(.7, 0, .2, 1); }
+#mobile-menu.is-open { transform: none; }
+
+/* Scroll reveal (JS adds .js to <html>, so content stays visible without JS) */
+.js [data-reveal] { opacity: 0; transform: translateY(40px); }
+
+/* Hero slider */
+.hero-slide { opacity: 0; visibility: hidden; }
+.hero-slide:first-of-type { opacity: 1; visibility: visible; }
+
+.hero-bar-btn { text-align: left; color: #fff; opacity: .55; transition: opacity .3s ease; cursor: pointer; }
+.hero-bar-btn:hover,
+.hero-bar-btn.is-active { opacity: 1; }
+.hero-bar { height: 2px; background: rgba(255, 255, 255, .28); overflow: hidden; }
+.hero-bar-fill { height: 100%; background: var(--color-signal); transform: scaleX(0); transform-origin: left; }
+
+/* Aircraft carousel */
+.fleet-track {
+    padding-inline: 1.5rem;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-padding-inline: 1.5rem;
+}
+.fleet-track::-webkit-scrollbar { display: none; }
+@media (min-width: 1024px) {
+    .fleet-track {
+        padding-inline: max(2.5rem, calc((100vw - 1440px) / 2 + 2.5rem));
+        scroll-padding-inline: max(2.5rem, calc((100vw - 1440px) / 2 + 2.5rem));
+    }
+}
+
+.aircraft-card img { will-change: transform; }
+.aircraft-card:hover .card-arrow { transform: translateX(6px); }
+.card-arrow { transition: transform .3s ease; }
+
+.fleet-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 3.25rem; height: 3.25rem; border-radius: 9999px;
+    border: 1px solid rgba(255, 255, 255, .3);
+    color: #fff;
+    transition: background-color .25s ease, border-color .25s ease, color .25s ease;
+}
+.fleet-btn:hover { background: var(--color-signal); border-color: var(--color-signal); }
+
+/* Word-by-word statement */
+.word { display: inline-block; will-change: opacity; }
+
+/* Pinned solutions section */
+[data-sol-img]:not(:first-child),
+[data-sol-text]:not(:first-child) { opacity: 0; visibility: hidden; }
+
+.sol-item { opacity: .35; transition: opacity .4s ease, transform .4s ease; }
+.sol-item.is-active { opacity: 1; transform: translateX(14px); }
+.sol-item .sol-num { transition: color .4s ease; }
+.sol-item.is-active .sol-num { color: var(--color-signal); }
+
+/* Reduced motion: skip the pinned layout and show the stacked one */
+@media (prefers-reduced-motion: reduce) {
+    [data-sol-desktop] { display: none !important; }
+    [data-sol-mobile] { display: block !important; }
+}
+
+/* Capabilities */
+.cap-card { position: relative; }
+.cap-card::before {
+    content: '';
+    position: absolute; left: 0; top: 0;
+    width: 100%; height: 2px;
+    background: var(--color-signal);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .6s cubic-bezier(.7, 0, .2, 1);
+}
+.cap-card.is-in::before,
+.cap-card:hover::before { transform: scaleX(1); }
+
+
+/* ---------- Phase 4: navbar details (layered so Tailwind utilities can override sizes) ---------- */
+@layer components {
+    .menu-eyebrow {
+        font-size: 11px; font-weight: 600; text-transform: uppercase;
+        letter-spacing: .25em; color: var(--color-signal);
+    }
+    .menu-link {
+        display: block; padding: .45rem 0; font-size: .9375rem;
+        color: rgba(255, 255, 255, .82);
+        transition: color .25s ease, transform .25s ease;
+    }
+    .menu-link:hover { color: var(--color-signal); transform: translateX(6px); }
+
+    .menu-tab {
+        position: relative; padding: .55rem 0 .55rem 1rem; text-align: left;
+        font-family: var(--font-display); font-size: 1.5rem; font-weight: 600;
+        text-transform: uppercase; line-height: 1.1;
+        color: rgba(255, 255, 255, .45); cursor: pointer;
+        transition: color .25s ease;
+    }
+    .menu-tab::before {
+        content: ''; position: absolute; left: 0; top: 20%; bottom: 20%; width: 2px;
+        background: var(--color-signal); transform: scaleY(0); transition: transform .25s ease;
+    }
+    .menu-tab:hover,
+    .menu-tab.is-active { color: #fff; }
+    .menu-tab.is-active::before { transform: scaleY(1); }
+}
+
+/* Dimmer behind open mega menus (sits right after the header) */
+.menu-backdrop {
+    position: fixed; inset: 0; z-index: 40;
+    background: rgba(5, 9, 18, .6);
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity .3s ease, visibility .3s;
+}
+#site-header.menu-open + .menu-backdrop { opacity: 1; visibility: visible; }
+
+/* Search overlay */
+#search-overlay {
+    opacity: 0; visibility: hidden;
+    transition: opacity .3s ease, visibility .3s;
+}
+#search-overlay.is-open { opacity: 1; visibility: visible; }
+#search-overlay input::-webkit-search-cancel-button { display: none; }
+
+/* News cards share the aircraft arrow hover */
+.group:hover .card-arrow { transform: translateX(6px); }
+
+
+/* ---------- Phase 5: polish ---------- */
+.nav-link.is-current::after { transform: scaleX(1); }
+
+::selection { background: var(--color-signal); color: #fff; }
+
+:focus-visible { outline: 2px solid var(--color-signal); outline-offset: 3px; }
+input:focus-visible, textarea:focus-visible, select:focus-visible { outline: none; }
+
+.skip-link {
+    position: fixed; left: 1rem; top: -4rem; z-index: 100;
+    padding: .75rem 1.25rem; border-radius: 9999px;
+    background: var(--color-signal); color: #fff; font-weight: 600;
+    transition: top .2s ease;
+}
+.skip-link:focus { top: 1rem; }
+
+select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1.25rem center; }
+
+
+/* ---------- Phase 6: hero video, filter chips ---------- */
+[hidden] { display: none !important; }
+
+/* Video sits above the photo and fades in once it is actually playing */
+.hero-video { opacity: 0; transition: opacity .9s ease; }
+.hero-video.is-ready { opacity: 1; }
+
+/* Play / pause icon swap */
+[data-pause] .i-play { display: none; }
+[data-pause].is-paused .i-play { display: block; }
+[data-pause].is-paused .i-pause { display: none; }
+
+@layer components {
+    .chip {
+        border: 1px solid rgba(255, 255, 255, .25); border-radius: 9999px;
+        padding: .6rem 1.4rem; font-size: 12.5px; font-weight: 600;
+        text-transform: uppercase; letter-spacing: .14em; color: rgba(255, 255, 255, .85);
+        transition: background-color .25s ease, border-color .25s ease, color .25s ease;
+    }
+    .chip:hover { border-color: #fff; }
+    .chip.is-active { background: var(--color-signal); border-color: var(--color-signal); color: #fff; }
+}
